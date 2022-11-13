@@ -1,0 +1,40 @@
+<style>
+  .col-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+</style>
+<div>
+  {% if x.files %}
+  <h5>Files</h5>
+  <a href="{{x.files.url}}" target="__blank">Download File(1)</a>
+  {% endif %}
+</div>
+
+<div>
+  {% if x.images and x.video %}
+  <div class='col-container'>
+    <img src="{{x.images.url}}" height="410">
+    <video width="230" controls autoplay muted>
+      <source src="{{x.video.url}}" type="video/mp4" />
+      Video Missing
+    </video>
+  </div>
+  {% else %}
+  <div>
+    {% if x.images %}
+    <img src="{{x.images.url}}" height="auto" />
+    {% endif %}
+  </div>
+
+  <div>
+    {% if x.video %}
+    <h5>Video</h5>
+    <video width="560" controls autoplay muted>
+      <source src="{{x.video.url}}" type="video/mp4" />
+      Video Missing
+    </video>
+    {% endif %}
+  </div>
+  {% endif %}
+</div>
