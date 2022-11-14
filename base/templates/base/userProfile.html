@@ -18,8 +18,10 @@
               <p>@{{user.username}}</p>
               <div>
               </div>
-              <a href="/" class="btn btn--main btn--pill">Edit Profile</a>
-            </div>
+              {% if user.username == request.user.username %}
+              <a href="/update_user" class="btn btn--main btn--pill">Edit Profile</a>
+              {% endif %}  
+          </div>
             <div class="profile__about">
               <h3>About</h3>
               <p>{{user.bio}}
