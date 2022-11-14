@@ -51,6 +51,20 @@ def registerUser(request):
             messages.error(request, 'Invalid Details........')
     return render(request, 'base/login.html', {'form':form})
 
+@login_required(login_url='login')
+def updateUser(request):
+    user = request.user
+    form = updateUserForm(instance=user)
+
+    if request.method == 'POST':
+        form = updateUserForm(request.POST, request.FILES, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('user-profile', pk=user.id)
+
+    return render(request, 'base/update-user.html', {'form': form})
+
+
 # @login_required(login_url='/login')
 def index(request):
     topic = Topic.objects.all()
