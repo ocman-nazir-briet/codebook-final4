@@ -21,7 +21,6 @@
   </a>
 </div>
 {% for x in room %}
-{% if x.host.status == True %}
 <div class="roomListRoom">
   <div class="roomListRoom__header">
     <a href="{% url 'user-profile' x.host.id %}" class="roomListRoom__author">
@@ -65,7 +64,6 @@
     <p class="roomListRoom__topic">{{x.topic}}</p>
   </div>
 </div>
-{% endif %}
 
 {% endfor %}
 
