@@ -17,9 +17,9 @@ pip install -r requirements.txt
 
 Running the server
 ```
-python manage.py
+python manage.py runserver
 ```
-OPening the Server
+Opening the Server
 ```
 127.0.0.1:8000
 ```
