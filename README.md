@@ -1,7 +1,7 @@
 <h1 align="center">CODEBOOK</h1>
 <a href="#">
   <div align="center">
-    <img src="images/.png" width='700'/>
+    <img src="codebook.jpg" width='700'/>
   </div>
 </a> 
 
