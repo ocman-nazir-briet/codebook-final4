@@ -4,4 +4,5 @@ gunicorn==20.1.0
 Pillow==9.2.0
 sqlparse==0.4.2
 djangorestframework
+corsheaders
 whitenoise==6.2.0
