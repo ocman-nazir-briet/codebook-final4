@@ -25,7 +25,7 @@ jobs:
           username: ocman
           password: $Q!Kk$nC@K_)#6R
           source: ./
-          target: /home/ocman/codebook-final4/
+          target: ocman@ssh.pythonanywhere.com:/home/ocman/codebook-final4/
           args: -r
 
 
