@@ -26,10 +26,10 @@ jobs:
 
       - name: Deploy to PythonAnywhere
         uses: PythonAnywhere/pythonanywhere-ssh-deploy@master
-      #   with:
-      #     ssh-private-key: ${{ secrets.PA_SSH_PRIVATE_KEY }}
-      #     remote-user: ${{ secrets.PA_REMOTE_USER }}
-      #     remote-host: ${{ secrets.PA_REMOTE_HOST }}
-      #     remote-port: ${{ secrets.PA_REMOTE_PORT }}
-      #     remote-path: ${{ secrets.PA_REMOTE_PATH }}
-      #     args: migrate
+        with:
+          ssh-private-key: f31cac94cdec44cc414f8d4050013fc3b102e148
+          remote-user: ocman
+          remote-host: ssh.pythonanywhere.com
+          remote-port: 22
+          remote-path: /home/ocman/codebook-final4/
+          args: migrate
