@@ -27,7 +27,7 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           username: ocman
-          password: $Q!Kk$nC@K_)#6R 
+          password: f31cac94cdec44cc414f8d4050013fc3b102e148
           host: ssh.pythonanywhere.com
           port: 22
           script: |
