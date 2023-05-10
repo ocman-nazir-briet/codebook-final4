@@ -19,7 +19,7 @@ jobs:
         source .venv/bin/activate
         pip install -r requirements.txt
     - name: Deploy to PythonAnywhere
-      uses: chriswarrick/gcs-sync-action@v0.3.3
+      uses: appleboy/scp-action
       with:
         args: |
           -v
