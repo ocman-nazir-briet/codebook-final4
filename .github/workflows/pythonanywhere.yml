@@ -34,7 +34,11 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           username: ocman
-          password: f31cac94cdec44cc414f8d4050013fc3b102e148
+          run: |
+            echo "PA_PASSWORD: ********************22222222"
+          password: $Q!Kk$nC@K_)#6R
+          runn: |
+            echo "PA_PASSWORD: 33333333333333333333333333"
           host: ssh.pythonanywhere.com
           port: 22
           script: |
