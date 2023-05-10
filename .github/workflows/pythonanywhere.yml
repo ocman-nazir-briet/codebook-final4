@@ -1,66 +1,42 @@
-name: PythonAnywhere CI/CD
+name: Deploy to PythonAnywhere
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.9'
-      - name: Install dependencies
-        run: |
-          python -m venv .venv
-          source .venv/bin/activate
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+    - name: Archive code
+      run: tar -czvf code.tar.gz .
+    - name: Copy code to remote server
+      uses: appleboy/scp-action@master
+      with:
+        source: ./codebook-final4.tar.gz
+        target: ocman@ssh.pythonanywhere.com:/home/ocman/codebook-final4/
+        ssh_key: f31cac94cdec44cc414f8d4050013fc3b102e148
+    - name: SSH into remote server and deploy code
+      uses: appleboy/ssh-action@master
+      with:
+        host: ssh.pythonanywhere.com
+        username: ocman
+        key: $Q!Kk$nC@K_)#6R
+        script: |
+          cd ~/codebook-final4
+          tar -xzvf codebook-final4.tar.gz
+          source /home/ocman/.virtualenvs/env/bin/activate
           pip install -r requirements.txt
-      - name: Deploy to PythonAnywhere
-        uses: appleboy/scp-action@master
-        with:
-          host: ssh.pythonanywhere.com
-          username: ocman
-          password: $Q!Kk$nC@K_)#6R
-          source: ./
-          target: ocman@ssh.pythonanywhere.com:/home/ocman/codebook-final4/
-          args: -r
-
-
-
-
-
-
-
-# name: PythonAnywhere CI/CD
-
-# on:
-#   push:
-#     branches: [ master ]
-
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
-#     steps:
-#     - uses: actions/checkout@v2
-#     - name: Set up Python 3.9
-#       uses: actions/setup-python@v2
-#       with:
-#         python-version: '3.9'
-#     - name: Install dependencies
-#       run: |
-#         python -m venv .venv
-#         source .venv/bin/activate
-#         pip install -r requirements.txt
-#     - name: Deploy to PythonAnywhere
-#       uses: appleboy/scp-action@master
-#       with:
-#         args: |
-#           -v
-#           -c "import shutil; shutil.copytree('.', '/home/ocman/codebook-final4', dirs_exist_ok=True)"
-#         source: .
-#         destination: "gc://ocman.pythonanywhere.com/codebook-final4"
-#       env:
+          python manage.py migrate
+          python manage.py collectstatic --noinput
+          touch /var/www/ocman..pythonanywhere.com_wsgi.py
 
