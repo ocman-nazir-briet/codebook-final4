@@ -1,0 +1,63 @@
+name: PythonAnywhere CI/CD
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'
+    - name: Install dependencies
+      run: |
+        python -m venv .venv
+        source .venv/bin/activate
+        pip install -r requirements.txt
+    - name: Deploy to PythonAnywhere
+      uses: chriswarrick/gcs-sync-action@v0.3.3
+      with:
+        args: |
+          -v
+          -c "import shutil; shutil.copytree('.', '/home/ocman/ocman.pythonanywhere.com/codebook-final4', dirs_exist_ok=True)"
+        source: .
+        destination: "gc://ocman.pythonanywhere.com/codebook-final4"
+      env:
+        GCS_OAUTH_ACCESS_TOKEN: ${{secrets.PYTHONANYWHERE_TOKEN}}
+
+
+
+# name: Django CI
+
+# on:
+#   push:
+#     branches: [ "master" ]
+#   pull_request:
+#     branches: [ "master" ]
+
+# jobs:
+#   build:
+
+#     runs-on: ubuntu-latest
+#     strategy:
+#       max-parallel: 4
+#       matrix:
+#         python-version: [3.9]
+
+#     steps:
+#     - uses: actions/checkout@v3
+#     - name: Set up Python ${{ matrix.python-version }}
+#       uses: actions/setup-python@v3
+#       with:
+#         python-version: ${{ matrix.python-version }}
+#     - name: Install Dependencies
+#       run: |
+#         python -m pip install --upgrade pip
+#         pip install -r requirements.txt
+#     - name: Run Tests
+#       run: |
+#         python manage.py test
