@@ -23,13 +23,15 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
 
-
       - name: Deploy to PythonAnywhere
-        uses: PythonAnywhere/pythonanywhere-ssh-deploy@master
+        uses: appleboy/ssh-action@master
         with:
-          ssh-private-key: f31cac94cdec44cc414f8d4050013fc3b102e148
-          remote-user: ocman
-          remote-host: ssh.pythonanywhere.com
-          remote-port: 22
-          remote-path: /home/ocman/codebook-final4/
-          args: migrate
+          username: ocman
+          password: $Q!Kk$nC@K_)#6R 
+          host: ssh.pythonanywhere.com
+          port: 22
+          script: |
+            cd /home/ocman/codebook-final4
+            git pull origin master
+            pip install -r requirements.txt
+            python manage.py migrate
