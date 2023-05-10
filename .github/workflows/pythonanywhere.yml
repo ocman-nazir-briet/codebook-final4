@@ -10,7 +10,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python 3.9
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@master
       with:
         python-version: '3.9'
     - name: Install dependencies
@@ -19,7 +19,7 @@ jobs:
         source .venv/bin/activate
         pip install -r requirements.txt
     - name: Deploy to PythonAnywhere
-      uses: appleboy/scp-action@v2
+      uses: appleboy/scp-action@master
       with:
         source: .
         target: ocman@ssh.pythonanywhere.com:/home/ocman/codebook-final4/
