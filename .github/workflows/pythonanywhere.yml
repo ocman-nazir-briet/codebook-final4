@@ -21,9 +21,9 @@ jobs:
       - name: Deploy to PythonAnywhere
         uses: appleboy/scp-action@master
         with:
-          host: ${{ secrets.PYTHONANYWHERE_HOST }}
-          username: ${{ secrets.PYTHONANYWHERE_USERNAME }}
-          password: ${{ secrets.PYTHONANYWHERE_PASSWORD }}
+          host: ssh.pythonanywhere.com
+          username: ocman
+          password: $Q!Kk$nC@K_)#6R
           source: ./
           target: /home/ocman/codebook-final4/
           args: -r
