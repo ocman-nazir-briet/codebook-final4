@@ -8,24 +8,59 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python 3.9
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.9'
-    - name: Install dependencies
-      run: |
-        python -m venv .venv
-        source .venv/bin/activate
-        pip install -r requirements.txt
-    - name: Deploy to PythonAnywhere
-      uses: appleboy/scp-action@master
-      with:
-        args: |
-          -v
-          -c "import shutil; shutil.copytree('.', '/home/ocman/codebook-final4', dirs_exist_ok=True)"
-        source: .
-        destination: "gc://ocman.pythonanywhere.com/codebook-final4"
-      env:
-        GCS_OAUTH_ACCESS_TOKEN: ${{secrets.PYTHONANYWHERE_TOKEN}}
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+      - name: Install dependencies
+        run: |
+          python -m venv .venv
+          source .venv/bin/activate
+          pip install -r requirements.txt
+      - name: Deploy to PythonAnywhere
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.PYTHONANYWHERE_HOST }}
+          username: ${{ secrets.PYTHONANYWHERE_USERNAME }}
+          password: ${{ secrets.PYTHONANYWHERE_PASSWORD }}
+          source: ./
+          target: /home/ocman/codebook-final4/
+          args: -r
+
+
+
+
+
+
+
+# name: PythonAnywhere CI/CD
+
+# on:
+#   push:
+#     branches: [ master ]
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - uses: actions/checkout@v2
+#     - name: Set up Python 3.9
+#       uses: actions/setup-python@v2
+#       with:
+#         python-version: '3.9'
+#     - name: Install dependencies
+#       run: |
+#         python -m venv .venv
+#         source .venv/bin/activate
+#         pip install -r requirements.txt
+#     - name: Deploy to PythonAnywhere
+#       uses: appleboy/scp-action@master
+#       with:
+#         args: |
+#           -v
+#           -c "import shutil; shutil.copytree('.', '/home/ocman/codebook-final4', dirs_exist_ok=True)"
+#         source: .
+#         destination: "gc://ocman.pythonanywhere.com/codebook-final4"
+#       env:
 
