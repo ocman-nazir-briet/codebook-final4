@@ -27,7 +27,7 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           username: ocman
-          key: f31cac94cdec44cc414f8d4050013fc3b102e148
+          key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIChGgcD6eMfdvqifa/EZOfCdXKWa4zDGYEbCA26QQ0k usmannazirbareet@gmail.com
           host: ssh.pythonanywhere.com
           port: 22
           known_hosts: |
