@@ -19,7 +19,7 @@ jobs:
         source .venv/bin/activate
         pip install -r requirements.txt
     - name: Deploy to PythonAnywhere
-      uses: appleboy/scp-action
+      uses: appleboy/scp-action@master
       with:
         args: |
           -v
