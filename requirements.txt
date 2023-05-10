@@ -5,3 +5,4 @@ djangorestframework
 django-cors-headers
 whitenoise==6.2.0
 django
+numpy
