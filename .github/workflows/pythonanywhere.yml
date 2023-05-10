@@ -24,8 +24,8 @@ jobs:
           pip install -r requirements.txt
 
 
-      # - name: Deploy to PythonAnywhere
-      #   uses: PythonAnywhere/pythonanywhere-ssh-deploy@master
+      - name: Deploy to PythonAnywhere
+        uses: PythonAnywhere/pythonanywhere-ssh-deploy@master
       #   with:
       #     ssh-private-key: ${{ secrets.PA_SSH_PRIVATE_KEY }}
       #     remote-user: ${{ secrets.PA_REMOTE_USER }}
