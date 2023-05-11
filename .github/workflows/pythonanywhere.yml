@@ -2,7 +2,7 @@ name: Deploy to PythonAnywhere
 on:
   push:
     branches:
-      - master
+      - main
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -19,56 +19,11 @@ jobs:
           source venv/bin/activate
           pip install -r requirements.txt
       - name: Deploy to PythonAnywhere
-        uses: fjpalacios/pythonanywhere-deploy-action@v1
-        with:
-          pa_username: ${{ secrets.PYTHONANYWHERE_USERNAME }}
-          pa_api_key: ${{ secrets.PYTHONANYWHERE_API_KEY }}
-          pa_webapp_name: ocman
-
-
-
-
-
-
-
-
-
-
-
-# name: Deploy to PythonAnywhere
-
-# on:
-#   push:
-#     branches:
-#       - master
-
-# jobs:
-#   deploy:
-#     runs-on: ubuntu-latest
-
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v2
-
-#       - name: Setup Python
-#         uses: actions/setup-python@v2
-#         with:
-#           python-version: '3.9'
-
-#       - name: Install dependencies
-#         run: |
-#           pip install --upgrade pip
-#           pip install -r requirements.txt
-
-#       - name: Deploy to PythonAnywhere
-#         uses: appleboy/ssh-action@master
-#         with:
-#           username: ocman
-#           key: b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZWQyNTUxOQAAACCAoRoHA+njH3b6on2vxGTnwnVylmuMwxmBGwgNukENJAAAAKCdfmSMnX5kjAAAAAtzc2gtZWQyNTUxOQAAACCAoRoHA+njH3b6on2vxGTnwnVylmuMwxmBGwgNukENJAAAAEA53Ptkt7K4emh1xTgQbN6BU55kRlQfkTuzSZfUejx7wYChGgcD6eMfdvqifa/EZOfCdXKWa4zDGYEbCA26QQ0kAAAAGnVzbWFubmF6aXJiYXJlZXRAZ21haWwuY29tAQID
-#           host: ssh.pythonanywhere.com
-#           port: 22
-#           script: |
-#             cd /home/ocman/codebook-final4
-#             git pull origin master
-#             pip install -r requirements.txt
-#             python manage.py migrate
+        env:
+          PA_SERVER: ocman.pythonanywhere.com
+          PA_USER: ocman
+          PA_WEBAPP: ocman
+          PA_PASSWORD: ${{ secrets.PYTHONANYWHERE_PASSWORD }}
+        run: |
+          echo "machine $PA_SERVER login $PA_USER password $PA_PASSWORD" > ~/.netrc
+          git push "https://$PA_USER@$PA_SERVER/$PA_USER/$PA_WEBAPP.git" HEAD:main
