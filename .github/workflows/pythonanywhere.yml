@@ -22,7 +22,7 @@ jobs:
         env:
           PA_SERVER: ocman.pythonanywhere.com
           PA_USER: ocman
-          PA_WEBAPP: ocman
+          PA_WEBAPP: codebook-final4
           PA_PASSWORD: ${{ secrets.PYTHONANYWHERE_PASSWORD }}
         run: |
           echo "machine $PA_SERVER login $PA_USER password $PA_PASSWORD" > ~/.netrc
