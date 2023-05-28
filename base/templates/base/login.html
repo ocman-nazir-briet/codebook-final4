@@ -1,4 +1,5 @@
 {% extends 'main.html' %}
+{% load socialaccount %}
 
 {% block content %}
 <main class="auth layout">
@@ -44,7 +45,18 @@
         <div class="auth__action">
           <p>Haven't signed up yet?</p>
           <a href="{% url 'register' %}" class="btn btn--link">Sign Up</a>
+          <p>OR</p>
+          <div class="google-btn">
+            <a href="{% provider_login_url 'google' %}">
+              <div class="google-icon-wrapper">
+                <p class="btn-text">
+                  <b class='ml-2'>Sign in with Google</b>
+                </p>
+              </div>
+            </a>
+          </div>
         </div>
+
       </div>
     </div>
   </div>
