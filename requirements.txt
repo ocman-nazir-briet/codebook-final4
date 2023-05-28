@@ -9,3 +9,4 @@ numpy
 pyyaml
 python-dotenv
 django-allauth
+psycopg2
