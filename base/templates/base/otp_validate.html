@@ -1,0 +1,14 @@
+<form class="form" action="/otp_validate/" method="POST">
+    {% csrf_token %}
+    <input name="username" value={{user}} hidden>
+    <input name="otp" placeholder='Enter Otp'>
+    <button type='submit'>Submit</button>
+
+</form>
+
+<form class="form" action="/otp_resend/" method="POST">
+    {% csrf_token %}
+    <input name="username" placeholder="Enter Username">
+    <button type='submit'>Resend</button>
+
+</form>

@@ -17,6 +17,10 @@ class User(AbstractUser):
     bio = models.TextField(max_length=500)
     avatar = models.ImageField(upload_to='avatars', default='nopic.jpg')
     status = models.BooleanField(default=True)
+    email_otp = models.CharField(max_length=12, default="000000")
+    is_email_verified = models.BooleanField(default=False)
+    is_phone_verified = models.BooleanField(default=False)
+    
     
 
     def __str__(self):

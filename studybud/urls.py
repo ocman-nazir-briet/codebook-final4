@@ -36,6 +36,8 @@ urlpatterns = [
     path('login/', views.loginUser, name='login'),
     path('register/', views.registerUser, name='register'),
     path('logout/', views.logoutUser, name='logout'),
+    path('otp_validate/', views.otp_validate, name='otp_validate'),
+    path('otp_resend/', views.otp_resend, name='otp_resend'),
     path('api/', include('api.urls'))
 ]
 urlpatterns+= static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)

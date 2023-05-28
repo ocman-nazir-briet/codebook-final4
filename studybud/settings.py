@@ -62,24 +62,24 @@ WSGI_APPLICATION = 'studybud.wsgi.application'
 
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'HOST':'containers-us-west-199.railway.app',
-        'PORT':'6323',
-        'USER':'postgres',
-        'PASSWORD':'XPgT2VRdeUcBRFJfVPML',
-        'NAME': 'railway',
-    }
-}
-
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'HOST':'containers-us-west-199.railway.app',
+#         'PORT':'6323',
+#         'USER':'postgres',
+#         'PASSWORD':'XPgT2VRdeUcBRFJfVPML',
+#         'NAME': 'railway',
 #     }
 # }
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 
 
@@ -159,7 +159,6 @@ SOCIALACCOUNT_PROVIDERS = {
 
 EMAIL_BACKEND = os.getenv('EMAIL_BACKEND')
 EMAIL_HOST = os.getenv('EMAIL_HOST')
-EMAIL_PORT = os.getenv('EMAIL_HOST')
 EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS')
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')

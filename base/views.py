@@ -6,7 +6,59 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+import random
+from django.core.mail import send_mail
 
+
+def generate_otp():
+    otp = ""
+    for _ in range(6):
+        otp += str(random.randint(0, 9))
+    return otp
+
+def otp_validate(request):
+    if request.method == "POST":
+        otp = request.POST.get('otp')
+        username = request.POST.get('username')
+        try:
+            user = User.objects.get(username=username)
+        except:
+            return redirect('login')
+        if user.email_otp == otp:
+            user.is_email_verified = True
+            user.save()
+            messages.success(request, 'Email Verified Successfully')
+            return redirect('login')
+        else:
+            messages.warning(request, 'Email Not Verified')
+            return redirect('login')
+    return render(request, 'base/otp_validate.html')
+
+def otp_resend(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        try:
+            user = User.objects.get(username=username)
+            print(user)
+        except:
+            return redirect('login')
+        otp = generate_otp()
+        user.email_otp = otp
+        user.save()
+        email = [user.email]
+        send_mail(
+        'OTP - Verification CODEBOOK',
+        f"This is your otp: {otp}",
+        '',
+        email,
+        fail_silently=False,
+        )
+        return HttpResponse('Sent SuccessFully')
+
+
+    return HttpResponse('Sent Response')
+
+        
 
 
 def loginUser(request):
@@ -24,11 +76,16 @@ def loginUser(request):
         except:
             messages.error(request, 'Invalid Username')
         user = authenticate(request, username=username, password=password)
-
         if user is not None:
-            login(request, user)
-            messages.success(request, 'Logged in Successfully')
-            return redirect('home')
+            context={}
+            myuser = User.objects.get(username = username)
+            context['user'] = myuser
+            if user.is_email_verified == False:
+                return render(request, 'base/otp_validate.html', context)
+            else:
+                login(request, user)
+                messages.success(request, 'Logged in Successfully')
+                return redirect('home')
         else:
             messages.error(request, 'Invalid Credentials')
     return render(request, 'base/login.html', {'page':page})
@@ -45,6 +102,18 @@ def registerUser(request):
         if form.is_valid():
             user = form.save(commit=False)
             user.username = user.username.lower()
+            otp = generate_otp()
+            user.email_otp = otp
+            email = [user.email]
+            print(email,"---------------")
+            send_mail(
+            'OTP - Verification CODEBOOK',
+            f"this is you r otp: {otp}",
+            '',
+            email,
+            fail_silently=False,
+            )
+
             user.save()
             return redirect('login')
         else:
