@@ -1,7 +1,7 @@
 name: CodeBook Workflow
 
 on:
-  pull_request:
+  push:
     branches:
       - master
 
