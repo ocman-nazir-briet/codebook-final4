@@ -28,6 +28,7 @@ class User(AbstractUser):
 
 class Topic(models.Model):
     name = models.CharField(max_length=200)
+    count = models.IntegerField(default=1)
     def __str__(self):
         return self.name[:20]
     class Meta:
@@ -35,7 +36,7 @@ class Topic(models.Model):
 
 class Room(models.Model):
     host = models.ForeignKey(User, on_delete=models.CASCADE)
-    topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
+    topic = models.CharField(max_length=532)
     name = models.CharField(max_length=200)
     description = models.TextField(max_length=1024)
     participants = models.ManyToManyField(User, related_name='participants', blank=True)

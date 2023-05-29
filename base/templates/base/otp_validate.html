@@ -1,14 +1,26 @@
-<form class="form" action="/otp_validate/" method="POST">
+{% extends 'main.html'%} {% block content%}
+<div style="margin-top:20rem">
+
+<center>
+    <form class="form" action="/otp_validate/" method="POST">
     {% csrf_token %}
-    <input name="username" value={{user}} hidden>
-    <input name="otp" placeholder='Enter Otp'>
-    <button type='submit'>Submit</button>
+    <input name="username" value="{{user}}" hidden />
+    <div class="form__group form__group" style="width:50rem;">
+        <label for="otp">Validate OTP</label>
+        <input id="otp" name="otp" type="text" placeholder="Enter Six Digit OTP......" maxlength="6">
+      </div>
+    <button type="submit" class="btn btn--main">Verify</button>
+  </form>
+</center>
+</div>
 
-</form>
-
-<form class="form" action="/otp_resend/" method="POST">
+<div style="margin-top:1rem">
+    <center>
+    <form class="form" action="/otp_resend/" method="POST">
     {% csrf_token %}
-    <input name="username" placeholder="Enter Username">
-    <button type='submit'>Resend</button>
-
-</form>
+    <input name="username" value="{{user}}" hidden/>
+    <button class="btn btn--main" type="submit">Resend Verification Code</button>
+    </form>
+</center>
+</div>
+{% endblock %}

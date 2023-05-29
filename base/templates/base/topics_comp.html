@@ -10,12 +10,12 @@
     {% for obj in topic%}
     <li>
       <a href="{% url 'home' %}?q={{obj.name}}"
-        >{{obj.name}} <span>{{obj.room_set.all.count}}</span></a
+        >{{obj.name}} <span>{{obj.count}}</span></a
       >
     </li>
     {% endfor %}
   </ul>
-  <a class="btn btn--link" href="topics.html">
+  {% comment %} <a class="btn btn--link" href="topics.html">
     More
     <svg
       version="1.1"
@@ -27,7 +27,7 @@
       <title>chevron-down</title>
       <path d="M16 21l-13-13h-3l16 16 16-16h-3l-13 13z"></path>
     </svg>
-  </a>
+  </a> {% endcomment %}
 </div>
 <!-- Topics End -->
 

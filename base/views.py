@@ -8,6 +8,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 import random
 from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 
 
 def generate_otp():
@@ -27,10 +29,10 @@ def otp_validate(request):
         if user.email_otp == otp:
             user.is_email_verified = True
             user.save()
-            messages.success(request, 'Email Verified Successfully')
+            messages.success(request, 'Email Verified')
             return redirect('login')
         else:
-            messages.warning(request, 'Email Not Verified')
+            messages.warning(request, 'Invalid OTP')
             return redirect('login')
     return render(request, 'base/otp_validate.html')
 
@@ -39,21 +41,23 @@ def otp_resend(request):
         username = request.POST.get('username')
         try:
             user = User.objects.get(username=username)
-            print(user)
         except:
             return redirect('login')
         otp = generate_otp()
         user.email_otp = otp
         user.save()
         email = [user.email]
+        html_message = render_to_string('base/otp_email.html', {'otp': otp})
+        plain_message = strip_tags(html_message)
         send_mail(
         'OTP - Verification CODEBOOK',
-        f"This is your otp: {otp}",
+        plain_message,
         '',
         email,
         fail_silently=False,
+        html_message=html_message
         )
-        return HttpResponse('Sent SuccessFully')
+        return render(request,'base/resend.html')
 
 
     return HttpResponse('Sent Response')
@@ -105,10 +109,11 @@ def registerUser(request):
             otp = generate_otp()
             user.email_otp = otp
             email = [user.email]
-            print(email,"---------------")
+            html_message = render_to_string('base/otp_email.html', {'otp': otp})
+            plain_message = strip_tags(html_message)
             send_mail(
             'OTP - Verification CODEBOOK',
-            f"this is you r otp: {otp}",
+            plain_message,
             '',
             email,
             fail_silently=False,
@@ -136,16 +141,16 @@ def updateUser(request):
 
 # @login_required(login_url='/login')
 def index(request):
-    topic = Topic.objects.all()
+    topic = Topic.objects.all().order_by('-count')
     user = User.objects.all()
     q = request.GET.get('q') if request.GET.get('q')  != None else ''
     room = Room.objects.filter(
-        Q(topic__name__icontains=q) |
+        Q(topic__icontains=q) |
         Q(name__icontains=q) |
         Q(description__icontains=q)
     )
     room_count=room.count()
-    room_messages = Message.objects.filter(Q(room__topic__name__icontains=q))
+    room_messages = Message.objects.filter(Q(room__name__icontains=q))
     context = {'room':room, 'topic':topic, 'room_count':room_count,'room_messages':room_messages, 'user':user}
 
     return render(request, 'base/home.html', context)
@@ -158,6 +163,15 @@ def createRoom(request):
         if form.is_valid():
             room = form.save(commit=False)
             room.host=request.user
+            name = room.topic
+            try:
+                topic = Topic.objects.get(name=name)
+                topic.count = topic.count + 1 
+                topic.save()
+            except:
+                topic = Topic.objects.create(name=name)
+                topic.save()
+
             room.save() 
             return redirect('home')
     return render(request, 'base/createRoom.html', {'form':form})

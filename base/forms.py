@@ -7,8 +7,8 @@ class RoomForm(forms.ModelForm):
         model = Room
         fields = '__all__'
         exclude = ['host', 'participants']
-        labels = {'host' :'host', 'topic': 'topic', 'name':'name', 
-        'description': 'description', 'participants': 'participants', 'files': 'Files', 'images':'Images', 'video':'Video'}
+        labels = {'host' :'host', 'topic': 'Topic', 'name':'Name', 
+        'description': 'Description', 'participants': 'Participants', 'files': 'Files', 'images':'Images', 'video':'Video'}
 
 class userForm(UserCreationForm):
     class Meta:
