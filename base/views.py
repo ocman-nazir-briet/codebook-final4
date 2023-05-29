@@ -47,7 +47,7 @@ def otp_resend(request):
         user.email_otp = otp
         user.save()
         email = [user.email]
-        html_message = render_to_string('base/otp_email.html', {'otp': otp})
+        html_message = render_to_string('base/otp_email.html', {'otp': otp, 'user':user})
         plain_message = strip_tags(html_message)
         send_mail(
         'OTP - Verification CODEBOOK',
