@@ -38,7 +38,7 @@ class Room(models.Model):
     host = models.ForeignKey(User, on_delete=models.CASCADE)
     topic = models.CharField(max_length=532)
     name = models.CharField(max_length=200)
-    description = models.TextField(max_length=1024)
+    description = models.TextField()
     participants = models.ManyToManyField(User, related_name='participants', blank=True)
     files = models.FileField(upload_to="Room-files", blank=True)
     images = models.ImageField(upload_to="Room-images", blank=True)

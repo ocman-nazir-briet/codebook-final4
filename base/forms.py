@@ -18,4 +18,4 @@ class userForm(UserCreationForm):
 class updateUserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['avatar', 'name', 'email', 'gender', 'dob', 'bio', 'phone', 'address']
+        fields = ['avatar', 'name', 'gender', 'dob', 'bio', 'phone', 'address']
