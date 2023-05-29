@@ -82,8 +82,8 @@ def loginUser(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             context={}
-            myuser = User.objects.get(username = username)
-            context['user'] = myuser
+            # myuser = User.objects.get(username = username)
+            context['user'] = user
             if user.is_email_verified == False:
                 return render(request, 'base/otp_validate.html', context)
             else:
