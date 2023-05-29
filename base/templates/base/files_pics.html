@@ -6,7 +6,6 @@
 </style>
 <div>
   {% if x.files %}
-  <h5>Files</h5>
   <a href="{{x.files.url}}" target="__blank">Download File(1)</a>
   {% endif %}
 </div>
@@ -29,11 +28,12 @@
 
   <div>
     {% if x.video %}
-    <h5>Video</h5>
-    <video height="300" controls autoplay muted>
-      <source src="{{x.video.url}}" type="video/mp4" />
-      Video Missing
-    </video>
+    <center>
+      <video height="450" controls autoplay muted>
+        <source src="{{x.video.url}}" type="video/mp4" />
+        Video Missing
+      </video>
+    </center>
     {% endif %}
   </div>
   {% endif %}
