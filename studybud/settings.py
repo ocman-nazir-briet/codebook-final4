@@ -64,12 +64,12 @@ WSGI_APPLICATION = 'studybud.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'HOST':'containers-us-west-199.railway.app',
-        'PORT':'6323',
-        'USER':'postgres',
-        'PASSWORD':'XPgT2VRdeUcBRFJfVPML',
-        'NAME': 'railway',
+        'ENGINE': os.getenv('DATABASE_ENGINE'),
+        'HOST':os.getenv('DATABASE_HOST'),
+        'PORT':os.getenv('DATABASE_PORT'),
+        'USER':os.getenv('DATABASE_USER'),
+        'PASSWORD':os.getenv('DATABASE_PASSWORD'),
+        'NAME': os.getenv('DATABASE_NAME')
     }
 }
 
